@@ -5,3 +5,5 @@
 `--port <port>` - Set up port. Mus be the same for client and server <br>
 `--skip-intro` - Skip intro sequance if you want <br>
 `--show-exclusive <player-name>` - Set up special camera mode (third person on the player you pass) <br>
+
+`ESC` for quit game
