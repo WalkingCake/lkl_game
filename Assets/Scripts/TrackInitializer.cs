@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Assets.PROMETEO___Car_Controller.Scripts
+namespace Assets.Scripts
 {
     public class TrackInitializer
     {

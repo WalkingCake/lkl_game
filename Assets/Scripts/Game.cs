@@ -1,4 +1,3 @@
-using Assets.PROMETEO___Car_Controller.Scripts;
 using Assets.Scripts;
 using System;
 using System.Collections.Generic;
@@ -40,6 +39,8 @@ public class Game : SystemBase
     public float InitialCountDown { get => _initialDelay; }
 
     public int Seed { get; set; }
+
+    public int TrafficProbability { get => _trafficProbability; set => _trafficProbability = value; }
 
     public string Port { get; set; }
 
@@ -86,7 +87,7 @@ public class Game : SystemBase
 
     protected override void InitInternal()
     {
-        TrackInitializer initializer = new TrackInitializer(Seed, _trafficProbability / 100.0);
+        TrackInitializer initializer = new TrackInitializer(Seed, TrafficProbability / 100.0);
         _track = initializer.CreateTrack(_playerNames.Length * 2 + 1, _trackLength);
 
         int i = 0;
@@ -162,6 +163,11 @@ public class Game : SystemBase
         {
             TrackModifier.FinishOverride--;
         }
+
+        if (StepId > _finalCountdownDelay)
+        {
+            StartFinalCountdown();
+        }
     }
 
     private void HandleCarMoved(Move move)
@@ -179,11 +185,16 @@ public class Game : SystemBase
         Player player = GetPlayer(x, y);
         _players.Remove(GetPlayer(x, y));
         _scoreController.NotifyPlayerFinished(player);
+        StartFinalCountdown();
+        Destroy(player.gameObject);
+    }
+
+    private void StartFinalCountdown()
+    {
         if (TrackModifier.FinishOverride < 0)
         {
-            TrackModifier.FinishOverride = _track.Length + 1;
+            TrackModifier.FinishOverride = _trackLength + 1;
         }
-        Destroy(player.gameObject);
     }
 
     private void HandlePlayerLosed(int x, int y)
@@ -203,6 +214,7 @@ public class Game : SystemBase
     [SerializeField] private GameObject _playerSample;
     [SerializeField] private ScoreController _scoreController;
     [SerializeField] private float _initialDelay = 10f;
+    [SerializeField] private int _finalCountdownDelay = 100;
 
     private Track<GameEntity> _track;
     private TrackSnapshotMaker _snapshotMaker;

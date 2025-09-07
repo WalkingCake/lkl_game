@@ -23,6 +23,7 @@ namespace Assets.Scripts
         private void HandleScoreFilled(EndGameInfo[] infos)
         {
             StringBuilder builder = new StringBuilder();
+            builder.AppendLine($"Seed: {_game.Seed}");
             for (int i = 0; i < infos.Length; i++)
             {
                 builder.AppendLine($"{i}. {infos[i]}");
@@ -32,5 +33,6 @@ namespace Assets.Scripts
 
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private ScoreController _scoreController;
+        [SerializeField] private Game _game;
     }
 }

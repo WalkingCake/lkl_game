@@ -15,7 +15,7 @@ namespace Assets.Scripts
         public Vector3 Target { get => _target;
             set
             {
-                _offset = value - _target;
+                _offset = value - transform.position;
                 _target = value;
                 _currentPath = Vector3.zero;
                 Vector3 cross = Vector3.Cross(_offset, _initialFwd);

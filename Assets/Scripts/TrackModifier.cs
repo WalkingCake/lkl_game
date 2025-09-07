@@ -50,6 +50,11 @@ namespace Assets.Scripts
             X = x;
             Y = y;
         }
+
+        public override string ToString()
+        {
+            return $"[{X}, {Y}]";
+        }
     }
 
     class ActionConsequances
@@ -131,6 +136,7 @@ namespace Assets.Scripts
             crashes.Sort((a, b) => a.Y - b.Y);
             foreach (Crash crash in crashes)
             {
+                Debug.Log($"Crash at {crash}");
                 HandleCrash(crash.X, crash.Y);
             }
             _crashes.Clear();
@@ -274,7 +280,7 @@ namespace Assets.Scripts
             Debug.Assert(_track.GetAt(move.From) != GameEntity.Free, "Only cars can move");
             Debug.Assert(_track.GetAt(move.To) == GameEntity.Free, "Only free destination allowed");
 
-            Debug.Log($"Player [{_track.GetAt(move.From)}] requested move [{move}]");
+            Debug.Log($"Car [{_track.GetAt(move.From)}] requested move [{move}]");
             OnBeforeCarMoved?.Invoke(move);
             
             _track.SetAt(move.To, _track.GetAt(move.From));

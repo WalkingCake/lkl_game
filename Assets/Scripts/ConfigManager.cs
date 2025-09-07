@@ -69,7 +69,8 @@ namespace Assets.Scripts
             { "--players", new ConfigCommandPlayers() },
             { "--port", new ConfigCommandPort() },
             { "--skip-intro", new ConfigCommandSkipIntro() },
-            { "--show-exclusive", new ConfigCommandShowExclusive() }
+            { "--show-exclusive", new ConfigCommandShowExclusive() },
+            { "--traffic-probability", new ConfigCommandTrafficProbability() }
         };
 
         [SerializeField] private Game _game;
@@ -199,6 +200,29 @@ namespace Assets.Scripts
         {
             game.ExclusiveShowPlayerName = args[0];
             return true;
+        }
+    }
+
+    internal class ConfigCommandTrafficProbability : ConfigCommandRequiredBase
+    {
+        protected override int MinArgsCount => 1;
+
+        protected override int MaxArgsCount => 1;
+
+        protected override bool ResolveInternal(Game game, params string[] args)
+        {
+            if (int.TryParse(args[0], out int trafficProbability) && trafficProbability >= 0 && trafficProbability <= 100)
+            {
+                game.TrafficProbability = trafficProbability;
+                return true;
+            }
+
+            return false;
+        }
+
+        protected override void ResolveRequiredInternal(Game game)
+        {
+            game.TrafficProbability = 20;
         }
     }
 }

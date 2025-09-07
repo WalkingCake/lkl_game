@@ -329,13 +329,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trackLength: 50
-  _trafficProbability: 10
+  _trafficProbability: 100
   _tickDt: 0.5
   _configManager: {fileID: 206448921}
   _snapshotObstacleSearchRadius: {x: 10, y: 10}
   _playerSample: {fileID: 6849378842938812277, guid: cc4513cb9894fda479bf2f100e5a9ad3, type: 3}
   _scoreController: {fileID: 206448923}
   _initialDelay: 5
+  _finalCountdownDelay: 100
 --- !u!4 &206448920
 Transform:
   m_ObjectHideFlags: 0
@@ -366,13 +367,19 @@ MonoBehaviour:
   _game: {fileID: 206448919}
   _dummyCommandLineArgs:
   - --players
-  - player1
-  - player2
-  - player3
+  - 1
+  - 2
+  - 3
+  - 4
   - --seed
-  - 1488
+  - 8889
   - --port
-  - 63872
+  - 49780
+  - --skip-intro
+  - --traffic-probability
+  - 100
+  - --show-exclusive
+  - 3
 --- !u!114 &206448922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,8 +507,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -564,6 +571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 327487760}
   _scoreController: {fileID: 206448923}
+  _game: {fileID: 206448919}
 --- !u!1 &943819966
 GameObject:
   m_ObjectHideFlags: 0
