@@ -18,8 +18,15 @@ namespace Assets.Scripts
                 _offset = value - transform.position;
                 _target = value;
                 _currentPath = Vector3.zero;
-                Vector3 cross = Vector3.Cross(_offset, _initialFwd);
-                _needRotate = cross.sqrMagnitude > Mathf.Epsilon;
+                if (_offset.sqrMagnitude < 1f)
+                {
+                    _needRotate = false;
+                    return;
+                }
+
+                _needRotate = Mathf.Abs(Vector3.Dot(_offset.normalized, _initialFwd)) < .9f;
+                transform.rotation = Quaternion.identity;
+                Vector3 cross = Vector3.Cross(_offset.normalized, _initialFwd);
                 if (_needRotate)
                 {
                     _isLeftRotate = Vector3.Dot(cross, Vector3.up) > 0f;

@@ -372,14 +372,12 @@ MonoBehaviour:
   - 3
   - 4
   - --seed
-  - 8889
+  - 8888
   - --port
-  - 49780
+  - 62788
   - --skip-intro
   - --traffic-probability
-  - 100
-  - --show-exclusive
-  - 3
+  - 20
 --- !u!114 &206448922
 MonoBehaviour:
   m_ObjectHideFlags: 0
