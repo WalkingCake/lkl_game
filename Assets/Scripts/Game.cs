@@ -54,9 +54,15 @@ public class Game : SystemBase
 
     public TrackModifier TrackModifier { get; private set; }
 
+    public string SqlAddress { get => _scoreController.SqlAddress; set => _scoreController.SqlAddress = value; }
+    
+    public string SqlTable { get => _scoreController.SqlTable; set => _scoreController.SqlTable = value; }
+    public int SqlMatchId { get => _scoreController.SqlMatchId; set => _scoreController.SqlMatchId = value; }
+
     public GameEntity GetAt(Vector2Int pos) => _track.GetAt(pos);
 
     public GameEntity GetAt(int x, int y) => _track.GetAt(x, y);
+
 
     public Player GetPlayer(Vector2Int pos)
     {
