@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trackLength: 50
-  _trafficProbability: 100
+  _trafficProbability: 24
   _tickDt: 0.5
   _configManager: {fileID: 206448921}
   _snapshotObstacleSearchRadius: {x: 10, y: 10}
@@ -374,7 +374,7 @@ MonoBehaviour:
   - --seed
   - 8888
   - --port
-  - 62747
+  - 61184
   - --skip-intro
   - --traffic-probability
   - 20
@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _game: {fileID: 206448919}
+  _autoCloseDelay: 10
 --- !u!114 &206448924
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using SQLite;
 
 namespace Assets.Scripts
 {
@@ -20,18 +20,13 @@ namespace Assets.Scripts
         {
             return $"[{PlayerName}: {Status} at step {StepId}]";
         }
-
-        public EndGameInfoSerialized GetSerialized()
-        {
-            return new EndGameInfoSerialized() { UserName = PlayerName };
-        }
     }
 
     [Serializable]
     public class EndGameInfoSerialized
     {
-        public string UserName = string.Empty;
-        public int Score = 0;
+        public string id = string.Empty;
+        public int score = -1;
     }
 
     [Serializable]
@@ -39,10 +34,10 @@ namespace Assets.Scripts
     {
         public EndGameInfoCollection(int playerCount)
         {
-            Info = new EndGameInfoSerialized[playerCount];
+            scores = new EndGameInfoSerialized[playerCount];
         }
 
-        public EndGameInfoSerialized[] Info;
+        public EndGameInfoSerialized[] scores;
     }
 
     public class ScoreController : SystemBase
@@ -101,24 +96,18 @@ namespace Assets.Scripts
             OnScoreFilled?.Invoke(_infos);
             _isScoreFilled = true;
         }
-        
+
         private void WriteScore()
         {
-            EndGameInfoCollection collection = new EndGameInfoCollection(_infos.Length);
+            EndGameInfoCollection scores = new EndGameInfoCollection(_infos.Length);
             for (int i = 0; i < _infos.Length; i++)
             {
-                collection.Info[i] = new EndGameInfoSerialized() { UserName = _infos[i].PlayerName, Score = _infos.Length - i - 1 };
+                scores.scores[i] = new EndGameInfoSerialized() { id = _infos[i].PlayerName, score = _infos.Length - i - 1 };
             }
-            string jsonScore = JsonUtility.ToJson(collection);
-            Console.WriteLine(jsonScore);
-            if (SqlAddress.Length == 0 || SqlTable.Length == 0 || SqlMatchId < 0)
-            {
-                return;
-            }
-            SQLiteConnection connection = new SQLiteConnection(SqlAddress);
-            SQLiteCommand command = connection.CreateCommand($"UPDATE {SqlTable} SET json = {jsonScore} WHERE id = {SqlMatchId}");
-            command.ExecuteNonQuery();
-            connection.Close();
+
+            ScoreClient scoreClient = gameObject.AddComponent<ScoreClient>();
+            scoreClient.Port = _game.Port;
+            scoreClient.ScoreSerialized = JsonUtility.ToJson(scores);
         }
 
         private EndGameInfo[] _infos;

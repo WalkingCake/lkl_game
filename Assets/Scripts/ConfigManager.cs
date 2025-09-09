@@ -70,10 +70,7 @@ namespace Assets.Scripts
             { "--port", new ConfigCommandPort() },
             { "--skip-intro", new ConfigCommandSkipIntro() },
             { "--show-exclusive", new ConfigCommandShowExclusive() },
-            { "--traffic-probability", new ConfigCommandTrafficProbability() },
-            { "--sql-address", new ConfigCommandSqlAddress() },
-            { "--sql-table", new ConfigCommandSqlTable() },
-            { "--sql-match-id", new ConfigCommandSqlMatchId() }
+            { "--traffic-probability", new ConfigCommandTrafficProbability() }
         };
 
         [SerializeField] private Game _game;
@@ -224,50 +221,6 @@ namespace Assets.Scripts
         protected override void ResolveRequiredInternal(Game game)
         {
             game.TrafficProbability = 20;
-        }
-    }
-
-    internal class ConfigCommandSqlAddress : ConfigCommandBase
-    {
-        protected override int MinArgsCount => 1;
-
-        protected override int MaxArgsCount => 1;
-
-        protected override bool ResolveInternal(Game game, params string[] args)
-        {
-            game.SqlAddress = args[0];
-            return true;
-        }
-    }
-
-    internal class ConfigCommandSqlTable : ConfigCommandBase
-    {
-        protected override int MinArgsCount => 1;
-
-        protected override int MaxArgsCount => 1;
-
-        protected override bool ResolveInternal(Game game, params string[] args)
-        {
-            game.SqlTable = args[0];
-            return true;
-        }
-    }
-
-    internal class ConfigCommandSqlMatchId : ConfigCommandBase
-    {
-        protected override int MinArgsCount => 1;
-
-        protected override int MaxArgsCount => 1;
-
-        protected override bool ResolveInternal(Game game, params string[] args)
-        {
-            if (int.TryParse(args[0], out var matchId))
-            {
-                game.SqlMatchId = matchId;
-                return true;
-            }
-
-            return false;
         }
     }
 }
